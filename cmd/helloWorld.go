@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var createCmd = &cobra.Command{
+var HelloWorldCommand = &cobra.Command{
 	Use: "helloWorld",
 	Run: func(cmd *cobra.Command, args []string) {
 		prompt := promptui.Select{
@@ -35,5 +35,5 @@ var createCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(HelloWorldCommand)
 }
