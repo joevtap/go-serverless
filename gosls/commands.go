@@ -1,9 +1,7 @@
 package gosls
 
-import (
-	"github.com/joevtap/go-serverless/cmd"
-)
+import "github.com/joevtap/go-serverless/cmd"
 
 var (
-	HelloWorldCommand = cmd.HelloWorldCommand
+	CreateCmd = cmd.CreateCmd
 )
