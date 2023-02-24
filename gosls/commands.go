@@ -3,5 +3,5 @@ package gosls
 import "github.com/joevtap/go-serverless/cmd"
 
 var (
-	CreateCmd = cmd.CreateCmd
+	CreateCmd = cmd.CreateCmdImpl
 )

@@ -23,10 +23,10 @@ var CreateCmd = &cobra.Command{
 	Long:    `The "create" command is used to create a new project using the Serverless Framework.`,
 	Example: `  gosls create`,
 	Args:    cobra.MaximumNArgs(1),
-	Run:     createCmdImpl,
+	Run:     CreateCmdImpl,
 }
 
-func createCmdImpl(cmd *cobra.Command, args []string) {
+func CreateCmdImpl(cmd *cobra.Command, args []string) {
 	var err error
 	var name string
 
