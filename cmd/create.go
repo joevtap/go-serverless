@@ -13,20 +13,20 @@ var (
 )
 
 func init() {
-	CreateCmd.Flags().StringVarP(&template, "template", "t", "", "Use a specific template (git repo)")
-	rootCmd.AddCommand(CreateCmd)
+	createCmd.Flags().StringVarP(&template, "template", "t", "", "Use a specific template (git repo)")
+	rootCmd.AddCommand(createCmd)
 }
 
-var CreateCmd = &cobra.Command{
+var createCmd = &cobra.Command{
 	Use:     "create [project-name]",
 	Short:   "Used to create a new project using the Serverless Framework",
 	Long:    `The "create" command is used to create a new project using the Serverless Framework.`,
 	Example: `  gosls create`,
 	Args:    cobra.MaximumNArgs(1),
-	Run:     CreateCmdImpl,
+	Run:     createCmdImpl,
 }
 
-func CreateCmdImpl(cmd *cobra.Command, args []string) {
+func createCmdImpl(cmd *cobra.Command, args []string) {
 	var err error
 	var name string
 
