@@ -1,0 +1,69 @@
+dirs:
+  services:
+    dirs:
+      hello:
+        files:
+          - name: hello.go
+            content: |
+              package main
+
+              import (
+              	"context"
+
+              	"github.com/aws/aws-lambda-go/events"
+              	"github.com/aws/aws-lambda-go/lambda"
+              )
+
+              func handler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+              	response := `{"message": "Hello World!"}`
+              	return events.APIGatewayProxyResponse{Body: response, StatusCode: 200}, nil
+              }
+
+              func main() {
+              	lambda.Start(handler)
+              }
+          - name: Makefile
+            content: |
+              FUNCTION_DIR=$(notdir $(CURDIR))
+              FUNCTION_NAME=$(FUNCTION_DIR)_handler
+              AWS_REGION={{.awsRegion}}
+
+              .PHONY: build clean test deploy
+
+              build:
+              	GOOS=linux GOARCH=amd64 go build -o $(FUNCTION_NAME) .
+
+              clean:
+              	rm -f $(FUNCTION_NAME)
+
+              test:
+              	go test -v
+
+              deploy:
+              	@echo "Deploying function $(FUNCTION_NAME) in directory $(FUNCTION_DIR)..."
+              	cd ../.. && serverless deploy function -f $(FUNCTION_NAME) --region $(AWS_REGION)
+              	@echo "Deployment complete."
+files:
+  - name: serverless.yml
+    content: |
+      service: {{.name}}
+      provider:
+        name: aws
+        runtime: go1.x
+        region: {{.awsRegion}}
+      package:
+        patterns:
+          - services/**/bin/*
+        individually: true
+      functions:
+        hello:
+          handler: services/hello/hello_handler
+          events:
+            - httpApi:
+                method: GET
+                path: /hello
+
+  # Path: tpl/serverless_default.yaml
+  # Variables:
+  #   - name
+  #   - awsRegion
