@@ -30,7 +30,7 @@ func init() {
 	// createCmd.Flags().StringVarP(&template, "template", "t", "", "Use a specific template (git repo)")
 	createCmd.Flags().StringVarP(&name, "name", "", "", "Name of the project")
 	createCmd.Flags().StringVarP(&awsRegion, "aws-region", "r", "", "AWS region to deploy to")
-	createCmd.Flags().BoolP("init-git", "", true, "Initialize a git repository")
+	createCmd.Flags().BoolP("init-git", "", false, "Initialize a git repository")
 	rootCmd.AddCommand(createCmd)
 }
 
