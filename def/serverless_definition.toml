@@ -1,7 +1,7 @@
 [[root]]
 name = 'serverless.yaml'
 type = 'file'
-template = 'tpl\Makefile.tpl'
+template = 'tpl\serverless.yaml.tpl'
 
 [[root]]
 name = 'services'
