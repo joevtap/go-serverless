@@ -1,0 +1,22 @@
+[[root]]
+name = 'serverless.yaml'
+type = 'file'
+template = 'tpl\Makefile.tpl'
+
+[[root]]
+name = 'services'
+type = 'dir'
+
+[[root.children]]
+name = 'hello'
+type = 'dir'
+
+[[root.children.children]]
+name = 'hello.go'
+type = 'file'
+template = 'tpl/hello.go.tpl'
+
+[[root.children.children]]
+name = 'Makefile'
+type = 'file'
+template = 'tpl/Makefile.tpl'
