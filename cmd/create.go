@@ -85,11 +85,16 @@ func createCmdImpl(cmd *cobra.Command, args []string) {
 	defer spinner.Stop()
 
 	// Create the project directory structure
-	tplPath := filepath.Join(utils.GetAppPath(), "tpl", "serverless_default.yaml")
-	scaffolder.Scaffold(tplPath, name, ProjectData{
+	definitionPath := filepath.Join(utils.GetAppPath(), "def", "serverless_definition.toml")
+	err = scaffolder.Scaffold(name, definitionPath, utils.GetAppPath(), ProjectData{
 		"name":      name,
 		"awsRegion": awsRegion,
 	})
+
+	if err != nil {
+		fmt.Printf("Error scaffolding project: %v", err)
+		return
+	}
 
 	// Initialize the project as a Go module
 	initCmd := exec.Command("go", "mod", "init", name)
