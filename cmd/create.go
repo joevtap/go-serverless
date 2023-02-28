@@ -45,6 +45,13 @@ var createCmd = &cobra.Command{
 
 func createCmdImpl(cmd *cobra.Command, args []string) {
 	var err error
+	var appRootPath string
+
+	if utils.ResolveEnv() == utils.Dev {
+		appRootPath = utils.GetDevPath()
+	} else {
+		appRootPath = utils.GetAppPath()
+	}
 
 	// If the user provided a name in the command, use it
 	if len(args) != 0 {
@@ -85,8 +92,8 @@ func createCmdImpl(cmd *cobra.Command, args []string) {
 	defer spinner.Stop()
 
 	// Create the project directory structure
-	definitionPath := filepath.Join(utils.GetAppPath(), "def", "serverless_definition.toml")
-	err = scaffolder.Scaffold(name, definitionPath, utils.GetAppPath(), ProjectData{
+	definitionPath := filepath.Join(appRootPath, "def", "serverless_definition.toml")
+	err = scaffolder.Scaffold(name, definitionPath, appRootPath, ProjectData{
 		"name":      name,
 		"awsRegion": awsRegion,
 	})
