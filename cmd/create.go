@@ -11,15 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-/*
-TODO: Add support for custom templates
-TODO: Add support for git repository based templates
-TODO: Add logs
-TODO: Add support for path as project name
-*/
-
 var (
-	// template  string
 	name      string
 	awsRegion string
 )
@@ -27,7 +19,6 @@ var (
 type ProjectData map[string]string
 
 func init() {
-	// createCmd.Flags().StringVarP(&template, "template", "t", "", "Use a specific template (git repo)")
 	createCmd.Flags().StringVarP(&name, "name", "", "", "Name of the project")
 	createCmd.Flags().StringVarP(&awsRegion, "aws-region", "r", "", "AWS region to deploy to")
 	createCmd.Flags().BoolP("init-git", "", false, "Initialize a git repository")
@@ -45,13 +36,8 @@ var createCmd = &cobra.Command{
 
 func createCmdImpl(cmd *cobra.Command, args []string) {
 	var err error
-	var appRootPath string
 
-	if utils.ResolveEnv() == utils.Dev {
-		appRootPath = utils.GetDevPath()
-	} else {
-		appRootPath = utils.GetAppPath()
-	}
+	appRootPath := utils.ResolveAppRoot()
 
 	// If the user provided a name in the command, use it
 	if len(args) != 0 {
